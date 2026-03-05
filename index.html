@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Golden State RP DMV</title>
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#0f0f0f;
+    color:white;
+}
+
+header{
+    background:black;
+    padding:20px;
+    text-align:center;
+    border-bottom:2px solid white;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    background:#151515;
+    padding:15px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#ccc;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:40px;
+}
+
+.card{
+    background:#1a1a1a;
+    padding:25px;
+    border-radius:10px;
+    margin-bottom:30px;
+    border:1px solid #333;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin-top:8px;
+    margin-bottom:15px;
+    background:#111;
+    border:1px solid #444;
+    color:white;
+}
+
+button{
+    background:white;
+    color:black;
+    padding:10px 20px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#ddd;
+}
+
+footer{
+    text-align:center;
+    padding:20px;
+    border-top:1px solid #333;
+    margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Golden State Roleplay DMV</h1>
+<p>Official Licensing & Vehicle Registration</p>
+</header>
+
+<nav>
+<a href="#">Home</a>
+<a href="#license">Driver License</a>
+<a href="#vehicle">Vehicle Registration</a>
+</nav>
+
+<div class="container">
+
+<div class="card" id="license">
+<h2>Driver License Application</h2>
+
+<label>Full Name</label>
+<input type="text">
+
+<label>Discord Name</label>
+<input type="text">
+
+<label>Date of Birth</label>
+<input type="date">
+
+<label>License Type</label>
+<select>
+<option>Class C - Standard</option>
+<option>Class M - Motorcycle</option>
+<option>Commercial License</option>
+</select>
+
+<button>Submit Application</button>
+
+</div>
+
+
+<div class="card" id="vehicle">
+<h2>Vehicle Registration</h2>
+
+<label>Owner Name</label>
+<input type="text">
+
+<label>Vehicle Model</label>
+<input type="text">
+
+<label>Plate Number</label>
+<input type="text">
+
+<label>Vehicle Color</label>
+<input type="text">
+
+<button>Register Vehicle</button>
+
+</div>
+
+</div>
+
+<footer>
+Golden State Roleplay DMV • State of San Andreas
+</footer>
+
+</body>
+</html>
