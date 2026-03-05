@@ -1,157 +1,371 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Golden State RP DMV</title>
+
+<title>Golden State RP DMV Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
 
 body{
-    margin:0;
-    font-family:Arial, Helvetica, sans-serif;
-    background:#0f0f0f;
-    color:white;
+margin:0;
+font-family:'Inter',sans-serif;
+background:#f4f6f9;
+color:#222;
 }
+
+/* HEADER */
 
 header{
-    background:black;
-    padding:20px;
-    text-align:center;
-    border-bottom:2px solid white;
+background:#1b1f24;
+color:white;
+padding:15px 30px;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
-header h1{
-    margin:0;
-    font-size:32px;
+header h2{
+margin:0;
+font-weight:600;
 }
 
-nav{
-    display:flex;
-    justify-content:center;
-    gap:40px;
-    background:#151515;
-    padding:15px;
+/* NAV */
+
+.nav{
+background:#e9ecef;
+padding:10px 30px;
+border-bottom:1px solid #d0d0d0;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    font-weight:bold;
+.nav button{
+background:none;
+border:none;
+margin-right:20px;
+font-size:15px;
+cursor:pointer;
 }
 
-nav a:hover{
-    color:#ccc;
+.nav button:hover{
+color:#007bff;
 }
+
+/* MAIN */
 
 .container{
-    max-width:900px;
-    margin:auto;
-    padding:40px;
+padding:40px;
 }
+
+/* STAT CARDS */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:20px;
+margin-top:20px;
+}
+
+.stat-card{
+background:#1e73d8;
+color:white;
+padding:25px;
+border-radius:6px;
+text-align:center;
+}
+
+.stat-card h1{
+margin:10px 0;
+font-size:40px;
+}
+
+/* CONTENT CARDS */
 
 .card{
-    background:#1a1a1a;
-    padding:25px;
-    border-radius:10px;
-    margin-bottom:30px;
-    border:1px solid #333;
+background:white;
+padding:25px;
+border-radius:6px;
+margin-top:30px;
+border:1px solid #ddd;
 }
 
-input, select{
-    width:100%;
-    padding:10px;
-    margin-top:8px;
-    margin-bottom:15px;
-    background:#111;
-    border:1px solid #444;
-    color:white;
+/* INPUTS */
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:15px;
+border:1px solid #ccc;
+border-radius:4px;
 }
 
-button{
-    background:white;
-    color:black;
-    padding:10px 20px;
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
+button.action{
+background:#1e73d8;
+color:white;
+border:none;
+padding:10px 20px;
+cursor:pointer;
+border-radius:4px;
 }
 
-button:hover{
-    background:#ddd;
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
 }
 
-footer{
-    text-align:center;
-    padding:20px;
-    border-top:1px solid #333;
-    margin-top:40px;
+th{
+background:#1e73d8;
+color:white;
+padding:10px;
+}
+
+td{
+padding:10px;
+border-bottom:1px solid #ddd;
+}
+
+.module{
+display:none;
+}
+
+.module.active{
+display:block;
 }
 
 </style>
+
+<script>
+
+/* MODULE SWITCH */
+
+function openModule(name){
+
+let modules=document.getElementsByClassName("module")
+
+for(let m of modules){
+m.classList.remove("active")
+}
+
+document.getElementById(name).classList.add("active")
+
+}
+
+/* CHARACTER SYSTEM */
+
+function createCharacter(){
+
+let name=document.getElementById("charName").value
+let dob=document.getElementById("charDOB").value
+
+if(name=="" || dob==""){
+alert("Fill out character info")
+return
+}
+
+let characters=JSON.parse(localStorage.getItem("gsrpCharacters")) || []
+
+characters.push({
+name:name,
+dob:dob
+})
+
+localStorage.setItem("gsrpCharacters",JSON.stringify(characters))
+
+loadCharacters()
+
+}
+
+function loadCharacters(){
+
+let characters=JSON.parse(localStorage.getItem("gsrpCharacters")) || []
+
+let list=document.getElementById("characterList")
+
+list.innerHTML=""
+
+characters.forEach(c=>{
+
+list.innerHTML+=`
+<tr>
+<td>${c.name}</td>
+<td>${c.dob}</td>
+</tr>
+`
+
+})
+
+}
+
+/* LEO SEARCH */
+
+function searchPlayer(){
+
+let name=document.getElementById("searchName").value
+
+document.getElementById("results").innerHTML=`
+<tr>
+<td>${name}</td>
+<td>Class C</td>
+<td>Valid</td>
+<td>2</td>
+<td>
+<button onclick="alert('License Suspended')">Suspend</button>
+<button onclick="alert('License Revoked')">Revoke</button>
+</td>
+</tr>
+`
+
+}
+
+window.onload=loadCharacters
+
+</script>
+
 </head>
 
 <body>
 
 <header>
-<h1>Golden State Roleplay DMV</h1>
-<p>Official Licensing & Vehicle Registration</p>
+
+<h2>Golden State RP DMV System</h2>
+
+<div>Government Portal</div>
+
 </header>
 
-<nav>
-<a href="#">Home</a>
-<a href="#license">Driver License</a>
-<a href="#vehicle">Vehicle Registration</a>
-</nav>
+<div class="nav">
+
+<button onclick="openModule('dashboard')">Home</button>
+<button onclick="openModule('characters')">Civilian Module</button>
+<button onclick="openModule('vehicles')">Vehicle Registry</button>
+<button onclick="openModule('leo')">Police Terminal</button>
+
+</div>
 
 <div class="container">
 
-<div class="card" id="license">
-<h2>Driver License Application</h2>
+<!-- DASHBOARD -->
 
-<label>Full Name</label>
-<input type="text">
+<div id="dashboard" class="module active">
 
-<label>Discord Name</label>
-<input type="text">
+<h2>Dashboard Overview</h2>
 
-<label>Date of Birth</label>
-<input type="date">
+<div class="stats">
 
-<label>License Type</label>
-<select>
-<option>Class C - Standard</option>
-<option>Class M - Motorcycle</option>
-<option>Commercial License</option>
-</select>
+<div class="stat-card">
+Issued Tickets
+<h1>4</h1>
+</div>
 
-<button>Submit Application</button>
+<div class="stat-card">
+Arrests
+<h1>0</h1>
+</div>
+
+<div class="stat-card">
+Registered Vehicles
+<h1>12</h1>
+</div>
+
+<div class="stat-card">
+Registered Firearms
+<h1>3</h1>
+</div>
+
+</div>
 
 </div>
 
 
-<div class="card" id="vehicle">
+<!-- CHARACTERS -->
+
+<div id="characters" class="module">
+
+<h2>Create Character</h2>
+
+<div class="card">
+
+<input id="charName" placeholder="Full Name">
+<input id="charDOB" type="date">
+
+<button class="action" onclick="createCharacter()">Create Character</button>
+
+</div>
+
+<div class="card">
+
+<h3>Your Characters</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>DOB</th>
+</tr>
+
+<tbody id="characterList"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- VEHICLES -->
+
+<div id="vehicles" class="module">
+
 <h2>Vehicle Registration</h2>
 
-<label>Owner Name</label>
-<input type="text">
+<div class="card">
 
-<label>Vehicle Model</label>
-<input type="text">
+<input placeholder="Owner Name">
+<input placeholder="Vehicle Model">
+<input placeholder="Plate Number">
 
-<label>Plate Number</label>
-<input type="text">
-
-<label>Vehicle Color</label>
-<input type="text">
-
-<button>Register Vehicle</button>
+<button class="action">Register Vehicle</button>
 
 </div>
 
 </div>
 
-<footer>
-Golden State Roleplay DMV • State of San Andreas
-</footer>
+
+<!-- LEO -->
+
+<div id="leo" class="module">
+
+<h2>Law Enforcement Terminal</h2>
+
+<div class="card">
+
+<input id="searchName" placeholder="Search Player Name">
+
+<button class="action" onclick="searchPlayer()">Search</button>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>License</th>
+<th>Status</th>
+<th>Vehicles</th>
+<th>Actions</th>
+</tr>
+
+<tbody id="results"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
 
 </body>
 </html>
